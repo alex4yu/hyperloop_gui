@@ -38,7 +38,7 @@ export default function Home() {
         <section className={styles.propulsion}>
         <div>
         <h1>Speedometer Example</h1>
-        <CircularMeter min={0} max={200} data={100} numLabels={5} />
+        <CircularMeter min={0} max={200} data={100} partitions={10} />
     </div>
       </section>
 

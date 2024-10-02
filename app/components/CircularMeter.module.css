@@ -1,4 +1,5 @@
 .meterContainer {
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,9 +20,8 @@
 
 .meterForeground {
     fill: none;
-    stroke: #00bfff;
+    stroke: red;
     stroke-width: 10;
-    stroke-linecap: round;
     transition: stroke-dashoffset 0.5s ease-in-out;
 }
 

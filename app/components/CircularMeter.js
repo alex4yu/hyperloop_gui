@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import styles from './CircularMeter.module.css';
 
-const CircularMeter = ({ min, max, data, numLabels }) => {
+const CircularMeter = ({ min, max, data, partitions }) => {
     // Calculate the proportion of the meter based on the current data
     const proportion = ((data - min) / (max - min));
     console.log(min + " " + max + " " + data)
@@ -15,7 +15,7 @@ const CircularMeter = ({ min, max, data, numLabels }) => {
     const offset = circumference * (arcPercentage) * (2 / 3); // Adjust for the 240 degrees arc
 
     // Generate labels
-    const totalLabels = numLabels + 2; // Including min and max
+    const totalLabels = partitions + 1; // Including min and max
     const labels = [];
 
     for (let i = 0; i < totalLabels; i++) {
@@ -33,6 +33,11 @@ const CircularMeter = ({ min, max, data, numLabels }) => {
                     cx="50"
                     cy="50"
                     r="45"
+                    style={{
+                        strokeDasharray: `${circumference * (2 / 3)}`, // Display only the 240 degrees arc
+                        transform: "rotate(240deg)", // Rotate to make it start at 8 o'clock
+                        transformOrigin: "50% 50%", // Rotate around the center
+                    }}
                 ></circle>
                 <circle
                     className={styles.meterForeground}
@@ -45,16 +50,17 @@ const CircularMeter = ({ min, max, data, numLabels }) => {
                         transform: "rotate(240deg)", // Rotate to make it start at 8 o'clock
                         transformOrigin: "50% 50%", // Rotate around the center
                     }}
+                    
                 ></circle>
                 <g className={styles.labels}>
                     {labels.map((label, index) => {
                         const angleRad = (label.angle) * Math.PI / 180;
-                        const x1 = 50 + 42 * Math.cos(angleRad); // inner radius for ticks
-                        const y1 = 50 + 42 * Math.sin(angleRad);
-                        const x2 = 50 + 45 * Math.cos(angleRad); // outer radius for ticks
-                        const y2 = 50 + 45 * Math.sin(angleRad);
-                        const xText = 50 + 55 * Math.cos(angleRad); // text position
-                        const yText = 50 + 55 * Math.sin(angleRad);
+                        const x1 = 50 + 40 * Math.cos(angleRad); // inner radius for ticks
+                        const y1 = 50 + 40 * Math.sin(angleRad);
+                        const x2 = 50 + 50 * Math.cos(angleRad); // outer radius for ticks
+                        const y2 = 50 + 50 * Math.sin(angleRad);
+                        const xText = 50 + 35 * Math.cos(angleRad); // text position
+                        const yText = 50 + 35 * Math.sin(angleRad);
 
                         return (
                             <g key={index}>
@@ -73,7 +79,8 @@ const CircularMeter = ({ min, max, data, numLabels }) => {
                                     y={yText}
                                     textAnchor="middle"
                                     dominantBaseline="middle"
-                                    fontSize="3"
+                                    fontSize="5"
+                                    transform={`rotate(${90}, ${xText}, ${yText})`}
                                 >
                                     {Math.round(label.value)}
                                 </text>
