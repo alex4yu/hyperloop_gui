@@ -1,8 +1,15 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import CircularMeter from "./components/CircularMeter";
-
+import QuickStatus from "./components/QuickStatus";
 export default function Home() {
+  const motors = [
+    {name: 'Front', status: 'green', rpm: 1000, temp: 20}, 
+    {name: 'Back', status: 'yellow', rpm: 800, temp: 40},
+    {name: 'Top', status: 'red', rpm: 750, temp: 30},
+    {name: 'Core', status: 'green', rpm: 1200, temp: 50},
+  ];
+  
+
   return (
     <div className={styles.container}>
       {/* Header Section */}
@@ -11,35 +18,29 @@ export default function Home() {
           <div style={{ backgroundColor: 'green', height: '20px', width: '200px', borderRadius: '5px' }}></div>
           <span>70%</span>
         </div>
-        <div>
-          <img src="/logo.png" alt="Logo" style={{ width: '50px' }} />
-        </div>
         <button className={styles.stopButton}>STOP</button>
       </header>
 
       {/* Motors Section */}
       <section className={styles.motors}>
         <div className={styles.sectionTitle}>Motors</div>
-        {['A', 'B', 'C', 'D'].map((motor, index) => (
-          <div key={index} className={styles.motorItem}>
-            <div className={styles.label}>{motor}</div>
-            <div className={styles.data}>
-              <div>
-                <p>Temperature</p>
-                <p>RPM</p>
-              </div>
-              <div className={styles.bar}></div>
-            </div>
-          </div>
+        {motors.map((motor, index) => (
+          <QuickStatus 
+            name={motor.name} 
+            key={index} 
+            temp={motor.temp} 
+            rpm={motor.rpm}
+            status={motor.status}
+            />
         ))}
       </section>
 
       {/* Propulsion Section */}
-        <section className={styles.propulsion}>
+      <section className={styles.propulsion}>
         <div>
-        <h1>Speedometer Example</h1>
-        <CircularMeter min={0} max={200} data={100} partitions={10} />
-    </div>
+          <h1>Speedometer Example</h1>
+          <CircularMeter min={0} max={200} data={100} partitions={10} />
+        </div>
       </section>
 
       {/* Sensors Section */}
