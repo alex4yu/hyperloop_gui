@@ -1,6 +1,5 @@
 import styles from "./page.module.css";
 import CircularMeter from "../components/CircularMeter";
-import QuickStatus from "../components/QuickStatus";
 const Motors = () => {
   const motors = [
     {name: 'Front', status: 'green', rpm: 1000, temp: 20}, 
@@ -9,10 +8,17 @@ const Motors = () => {
     {name: 'Core', status: 'green', rpm: 1200, temp: 50},
   ];
   
-  const renderMotorDetail = (name, key, temo, rpm, status) => {
+  const renderMotorDetail = (name, key, temp, rpm, status) => {
     return(
-        <div className={styles.motorDetail}>
+        <div className={styles.motorDetail} key={key}>
             <div className={styles.title}>{name}</div>
+            <div className={styles.circleContainer}>
+              <CircularMeter min={0} max={5000} data={rpm} partitions={10} />
+            </div>
+            <div>Status: </div>
+            <div>insert status informations</div>
+
+            <div style={{marginTop: '50px'}}>insert other information</div>
         </div>
     );
     

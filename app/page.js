@@ -1,6 +1,9 @@
+"use client";
 import styles from "./page.module.css";
 import CircularMeter from "./components/CircularMeter";
 import QuickStatus from "./components/QuickStatus";
+
+import { useState } from 'react';
 export default function Home() {
   const motors = [
     {name: 'Front', status: 'green', rpm: 1000, temp: 20}, 
@@ -9,6 +12,11 @@ export default function Home() {
     {name: 'Core', status: 'green', rpm: 1200, temp: 50},
   ];
   
+  const [data, setData] = useState(0);
+
+  const handleSliderChange = (event) => {
+    setData(Number(event.target.value));
+  };
 
   return (
     <div className={styles.container}>
@@ -39,7 +47,18 @@ export default function Home() {
       <section className={styles.propulsion}>
         <div>
           <h1>Speedometer Example</h1>
-          <CircularMeter min={0} max={200} data={100} partitions={10} />
+          <CircularMeter min={0} max={200} data={data} partitions={10} />
+        </div>
+        <div className={styles.sliderContainer}>
+          <input
+            type="range"
+            min={0}
+            max={200}
+            value={data}
+            onChange={handleSliderChange}
+            className={styles.slider}
+          />
+          <div className={styles.sliderValue}>{data}</div>
         </div>
       </section>
 
@@ -48,10 +67,11 @@ export default function Home() {
         <div className={styles.sectionTitle}>Sensors</div>
       </section>
 
-      {/* Water Section */}
+      {/* Pump Section */}
       <section className={styles.water}>
-        <div className={styles.sectionTitle}>Water</div>
-        <p>Pressure: </p>
+        <div className={styles.sectionTitle}>Pump</div>
+        <p>Pressure (PSI)</p>
+        <CircularMeter min={0} max={500} data={75} partitions={10} />
       </section>
 
       {/* Status Section */}

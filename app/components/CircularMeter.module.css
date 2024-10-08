@@ -8,9 +8,7 @@
     height: 150px;
 }
 
-.meter {
-    transform: rotate(-90deg); /* Rotates the circle to make it start from the top */
-}
+
 
 .meterBackground {
     fill: none;
